@@ -1,5 +1,6 @@
 import React from 'react'
-import { NothingSelected } from './NothingSelected'
+import { NotesScreen } from '../notes/NotesScreen'
+// import { NothingSelected } from './NothingSelected'
 import { Sidebar } from './Sidebar'
 
 export const JournalScreen = () => {
@@ -8,7 +9,8 @@ export const JournalScreen = () => {
       <Sidebar />
 
       <main>
-        <NothingSelected />
+        {/* <NothingSelected /> */}
+        <NotesScreen />
       </main>
     </div>
   )
