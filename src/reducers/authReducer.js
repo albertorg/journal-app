@@ -2,7 +2,7 @@ import { types } from "../types/types";
 
 /*
     state will be empty when are not user logged
-    adn when an user is logged :
+    and when an user is logged :
 
     {
         uid: jkgsdjfjkdhhfsjdf
