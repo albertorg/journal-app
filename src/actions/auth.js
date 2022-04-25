@@ -2,7 +2,8 @@ import { types } from '../types/types'
 import {googleAuthProvider} from '../firebase/firebase-config'
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import { finishLoadingAction, startLoadingAction } from './ui'
-import { async } from '@firebase/util';
+import Swal from 'sweetalert2'
+
 
 
 const auth = getAuth()
@@ -40,6 +41,7 @@ export const login = (uid, displayName) => (
                 .catch(e => {
                     console.log(e)
                     dispatch(finishLoadingAction())
+                    Swal.fire('Error', e.code, 'error')
                 })
         }
     } 
@@ -56,6 +58,7 @@ export const login = (uid, displayName) => (
                 })
                 .catch(e => {
                     console.log(e)
+                    Swal.fire('Error', e.code, 'error')
                 })
         }
     }
