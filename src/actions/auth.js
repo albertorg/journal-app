@@ -1,6 +1,9 @@
 import { types } from '../types/types'
 import {googleAuthProvider} from '../firebase/firebase-config'
-import { createUserWithEmailAndPassword, getAuth, signInWithPopup, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
+import { finishLoadingAction, startLoadingAction } from './ui'
+import { async } from '@firebase/util';
+
 
 const auth = getAuth()
 
@@ -25,10 +28,19 @@ export const login = (uid, displayName) => (
     }
 
     export const startLogin = (email, password) => {
+
         return (dispatch) => {
-            setTimeout(() => {
-                dispatch( login(123, 'Pedro'))
-            }, 3500);
+            dispatch(startLoadingAction())
+
+            signInWithEmailAndPassword(auth, email, password)
+                .then(({user}) => {
+                    dispatch(login(user.uid, user.displayName))
+                    dispatch(finishLoadingAction())
+                })
+                .catch(e => {
+                    console.log(e)
+                    dispatch(finishLoadingAction())
+                })
         }
     } 
 
@@ -47,3 +59,16 @@ export const login = (uid, displayName) => (
                 })
         }
     }
+
+    export const startLogout = () => {
+        return async(dispatch) => {
+            await signOut(auth)
+            dispatch( logout())
+        }
+    }
+
+    export const logout =  () => (
+        {
+            type: types.logout
+        }
+    )
